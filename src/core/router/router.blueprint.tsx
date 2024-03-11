@@ -555,6 +555,41 @@ export const blueprint: RouteObject[] = [
     ],
   },
   {
+    path: 'referral',
+    children: [
+      {
+        path: ':username/org',
+        loader: async ({ params }) => {
+          const user = await otherProfileByUsername(params.username!);
+          return {
+            user,
+          };
+        },
+        async lazy() {
+          const { ReferralOrg } = await import('src/Nowruz/pages/referral/org');
+          return {
+            Component: ReferralOrg,
+          };
+        },
+      },
+      {
+        path: ':username/user',
+        loader: async ({ params }) => {
+          const user = await otherProfileByUsername(params.username!);
+          return {
+            user,
+          };
+        },
+        async lazy() {
+          const { ReferralOrg } = await import('src/Nowruz/pages/referral/user');
+          return {
+            Component: ReferralOrg,
+          };
+        },
+      },
+    ],
+  },
+  {
     path: 'privacy-policy',
     async lazy() {
       const { PrivacyPolicy } = await import('src/Nowruz/pages/privacyPolicy/privacyPolicy');
